@@ -3,17 +3,17 @@
 # install.sh — Instalasi Aplikasi Percetakan Online + Kasir
 # ------------------------------------------------------------
 # Cara cepat (metode curl):
-#   curl -fsSL https://raw.githubusercontent.com/csrainbow/percetakan-online-kasir/main/install.sh | sudo bash
+#   curl -fsSL https://raw.githubusercontent.com/csrainbow/percetakan-ikkyshare/main/install.sh | sudo bash
 #
 # Dengan pengaturan khusus:
 #   sudo ADMIN_PASSWORD=rahasia KASIR_PORT=8081 TOKO_PORT=8000 \
-#     bash -c "$(curl -fsSL https://raw.githubusercontent.com/csrainbow/percetakan-online-kasir/main/install.sh)"
+#     bash -c "$(curl -fsSL https://raw.githubusercontent.com/csrainbow/percetakan-ikkyshare/main/install.sh)"
 # ============================================================
 set -euo pipefail
 
 # ---------- Konfigurasi (override via env) ----------
 csrainbow="${csrainbow:-csrainbow}"
-REPO_NAME="${REPO_NAME:-percetakan-online-kasir}"
+REPO_NAME="${REPO_NAME:-percetakan-ikkyshare}"
 BRANCH="${BRANCH:-main}"
 INSTALL_BASE="${INSTALL_BASE:-/var/www}"
 TOKO_DIR="${TOKO_DIR:-$INSTALL_BASE/percetakan-online}"
@@ -111,7 +111,7 @@ done
 [ -z "$SOCK" ] && SOCK=$(ls /run/php/php*-fpm.sock 2>/dev/null | head -1 || echo /run/php/php-fpm.sock)
 
 info "Pasang nginx kasir (port ${KASIR_PORT}, socket ${SOCK})"
-cat > /etc/nginx/sites-available/percetakan-online-kasir <<EOF
+cat > /etc/nginx/sites-available/percetakan-ikkyshare <<EOF
 server {
     listen ${KASIR_PORT};
     server_name _;
@@ -131,7 +131,7 @@ server {
     }
 }
 EOF
-ln -sf /etc/nginx/sites-available/percetakan-online-kasir /etc/nginx/sites-enabled/
+ln -sf /etc/nginx/sites-available/percetakan-ikkyshare /etc/nginx/sites-enabled/
 nginx -t || err "nginx -t gagal"
 systemctl enable nginx >/dev/null 2>&1 || true
 nginx -s reload || systemctl restart nginx

@@ -10,7 +10,7 @@ Varian produksi Percetakan Rainbow tersedia di repo `csrainbow/percetakan-online
 ## Isi Repo
 
 ```
-percetakan-online-kasir/
+percetakan-ikkyshare/
 ├── install.sh        # 1-klik install (download repo → paket → service → selesai)
 ├── uninstall.sh      # hapus aplikasi (data dibackup dulu)
 ├── toko-online/      # toko online (Percetakan Ikky Share, percetakan-ikkyshare.web.id)
@@ -80,7 +80,7 @@ percetakan-online-kasir/
 ## Instalasi (1 klik, metode curl)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/csrainbow/percetakan-online-kasir/main/install.sh | sudo bash
+curl -fsSL https://raw.githubusercontent.com/csrainbow/percetakan-ikkyshare/main/install.sh | sudo bash
 ```
 
 Satu perintah ini akan: download repo → install paket (php, nginx) → salin `toko-online/`
@@ -103,7 +103,7 @@ Contoh:
 
 ```bash
 sudo ADMIN_PASSWORD=rahasia123 NOTA_SECRET=isi-sendiri KASIR_PORT=8081 TOKO_PORT=8000 \
-  bash -c "$(curl -fsSL https://raw.githubusercontent.com/csrainbow/percetakan-online-kasir/main/install.sh)"
+  bash -c "$(curl -fsSL https://raw.githubusercontent.com/csrainbow/percetakan-ikkyshare/main/install.sh)"
 ```
 
 ## Login Default
@@ -118,7 +118,7 @@ Ganti password segera setelah instalasi (kasir: menu **Pengaturan > Keamanan**; 
 ## Uninstall
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/csrainbow/percetakan-online-kasir/main/uninstall.sh | sudo bash
+curl -fsSL https://raw.githubusercontent.com/csrainbow/percetakan-ikkyshare/main/uninstall.sh | sudo bash
 ```
 
 Database & upload dibackup otomatis ke `/root/backup-percetakan-<timestamp>` sebelum dihapus.
