@@ -8,15 +8,15 @@
 <link rel="stylesheet" href="assets/style.css?v=<?= filemtime(__DIR__ . '/../assets/style.css') ?>">
 <script src="assets/print.js"></script>
 </head>
-<body class="<?= setting('struk_lebar', '80') === '58' ? 'struk-lebar-58' : '' ?>">
+<body>
 <div class="no-print aksi-struk">
     <a class="btn" href="index.php?p=<?= e($back_page) ?>">Kembali</a>
     <button class="btn" onclick="cetakNota()">Cetak Nota</button>
 </div>
 
 <div class="struk">
-    <?php if (setting('logo_struk', 'logo.png')): ?>
-        <img class="logo-struk" src="<?= e(setting('logo_struk', 'logo.png')) ?>" alt="Logo">
+    <?php if (setting('logo_struk', 'assets/logo-struk.jpeg')): ?>
+        <img class="logo-struk" src="<?= e(setting('logo_struk', 'assets/logo-struk.jpeg')) ?>" alt="Logo">
     <?php endif; ?>
     <div class="center">
         <h3><?= e(setting('nama_toko')) ?></h3>
