@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/config.php';
 
 // 🔥 CEK LOGIN
 if (!isset($_SESSION['customer_id'])) {
@@ -245,7 +245,7 @@ include '../includes/header.php';
     color: #fff;
 }
 .btn-warning:hover {
-    background: #c62828;
+    background: #d68910;
 }
 .btn-outline {
     background: #fff;
@@ -387,7 +387,7 @@ include '../includes/header.php';
                     <span>
                         <?= htmlspecialchars($item['product_name']) ?>
                         <?php if ($item['design_service'] === 'jasa'): ?>
-                            <span style="color:#d32f2f;font-size:12px;">(+ Jasa Desain)</span>
+                            <span style="color:#e67e22;font-size:12px;">(+ Jasa Desain)</span>
                         <?php endif; ?>
                         <?php if ($item['design_result_file']): ?>
                             <span style="color:#27ae60;font-size:12px;">✅ Hasil siap</span>

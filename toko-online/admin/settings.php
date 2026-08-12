@@ -16,7 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'qris_name', 'qris_merchant_id',
         'midtrans_server_key', 'midtrans_client_key',
         'invoice_template', 'invoice_footer', 'printer_options',
-        'whatsapp_number', 'footer_text'
+        'whatsapp_number', 'footer_text',
+        'wa_enabled', 'wa_provider', 'wa_token'
     ];
     
     try {
@@ -277,6 +278,7 @@ include '../includes/header.php';
             <li><a href="dashboard.php">Dashboard</a></li>
             <li><a href="products.php">Produk</a></li>
             <li><a href="orders.php">Pesanan</a></li>
+            <li><a href="../kasir/" target="_blank">Kasir</a></li>
             <li><a href="edit-halaman.php?slug=tentang-kami">Tentang Kami</a></li>
             <li><a href="settings.php" class="active">Pengaturan</a></li>
             <li><a href="logout.php">Logout</a></li>
@@ -325,6 +327,28 @@ include '../includes/header.php';
                             <label>WhatsApp Number (untuk tombol kontak)</label>
                             <input type="text" name="whatsapp_number" value="<?= htmlspecialchars($settings['whatsapp_number'] ?? '') ?>" placeholder="628123456789">
                             <div class="helper-text">Gunakan format internasional tanpa + (contoh: 628123456789)</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Notifikasi WhatsApp Pesanan Baru</label>
+                        <select name="wa_enabled">
+                            <option value="" <?= ($settings['wa_enabled'] ?? '') === '' ? 'selected' : '' ?>>Nonaktif</option>
+                            <option value="1" <?= ($settings['wa_enabled'] ?? '') === '1' ? 'selected' : '' ?>>Aktif</option>
+                        </select>
+                        <div class="helper-text">Kirim notifikasi WA ke nomor di atas setiap ada pesanan baru</div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Penyedia Gateway</label>
+                            <select name="wa_provider">
+                                <option value="fonnte" <?= ($settings['wa_provider'] ?? 'fonnte') === 'fonnte' ? 'selected' : '' ?>>Fonnte</option>
+                                <option value="wablas" <?= ($settings['wa_provider'] ?? '') === 'wablas' ? 'selected' : '' ?>>Wablas</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Token API (Fonnte/Wablas)</label>
+                            <input type="text" name="wa_token" value="<?= htmlspecialchars($settings['wa_token'] ?? '') ?>" placeholder="Token dari dashboard Fonnte">
+                            <div class="helper-text">Token ada di menu Device Fonnte (tombol Token)</div>
                         </div>
                     </div>
                     <div class="form-group">

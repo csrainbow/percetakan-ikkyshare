@@ -249,7 +249,7 @@ include '../includes/header.php';
     color: #fff;
 }
 .btn-warning:hover {
-    background: #c62828;
+    background: #d68910;
 }
 .btn-success {
     background: #27ae60;

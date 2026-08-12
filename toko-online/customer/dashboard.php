@@ -333,7 +333,7 @@ include '../includes/header.php';
                     <span>
                         <?= htmlspecialchars($item['product_name']) ?>
                         <?php if ($item['design_service'] === 'jasa'): ?>
-                            <span style="color:#d32f2f;font-size:12px;">(+ Jasa Desain)</span>
+                            <span style="color:#e67e22;font-size:12px;">(+ Jasa Desain)</span>
                         <?php endif; ?>
                         <?php if ($item['design_result_file']): ?>
                             <span style="color:#27ae60;font-size:12px;">✅ Hasil desain siap</span>

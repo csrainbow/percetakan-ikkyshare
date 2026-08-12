@@ -443,7 +443,9 @@ include 'includes/header.php';
         <?php foreach ($products as $p): 
             $firstImg = getFirstProductImage($p['id']);
             $isCustom = $p['custom_size'];
-            $priceDisplay = $isCustom ? formatRupiah($p['price_per_m2']) . '/m²' : formatRupiah($p['price']);
+            $unitLabels = ['none'=>'','m2'=>'/m²','meter'=>'/m','lembar'=>'/lembar','buku'=>'/buku','rim'=>'/rim','pcs'=>'/pcs'];
+            $ul = $unitLabels[$p['size_unit'] ?? 'none'] ?? '';
+            $priceDisplay = $isCustom ? formatRupiah($p['price_per_m2']) . $ul : formatRupiah($p['price']);
             $inStock = $p['stock'] > 0;
             $icon = $categoryIcons[$p['category']] ?? '📄';
         ?>

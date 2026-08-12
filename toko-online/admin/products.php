@@ -300,7 +300,7 @@ include '../includes/header.php';
 .btn-success { background: #27ae60; color: #fff; }
 .btn-success:hover { background: #1e8449; }
 .btn-danger { background: #d32f2f; color: #fff; }
-.btn-danger:hover { background: #b71c1c; }
+.btn-danger:hover { background: #c0392b; }
 .btn-outline { background: #fff; color: #111111; border: 1px solid #111111; }
 .btn-outline:hover { background: #f8f9fa; }
 .btn-sm { padding: 4px 10px; font-size: 12px; }
@@ -500,6 +500,7 @@ include '../includes/header.php';
             <li><a href="dashboard.php">Dashboard</a></li>
             <li><a href="products.php" class="active">Produk</a></li>
             <li><a href="orders.php">Pesanan</a></li>
+            <li><a href="../kasir/" target="_blank">Kasir</a></li>
             <li><a href="edit-halaman.php?slug=tentang-kami">Tentang Kami</a></li>
             <li><a href="settings.php">Pengaturan</a></li>
             <li><a href="logout.php">Logout</a></li>
@@ -737,7 +738,7 @@ include '../includes/header.php';
                             </td>
                             <td>
                                 <?= $p['custom_size'] 
-                                    ? formatRupiah($p['price_per_m2']) . '/m²' 
+                                    ? formatRupiah($p['price_per_m2']) . $ul 
                                     : formatRupiah($p['price']) ?>
                             </td>
                             <td>

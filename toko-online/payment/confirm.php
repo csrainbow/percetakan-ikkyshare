@@ -82,21 +82,11 @@ if ($sisaPembayaran <= 0) {
 $isDp = ($totalPaid == 0);
 $isPelunasan = ($totalPaid > 0 && $sisaPembayaran > 0);
 
-// Ambil daftar bank dari settings (disimpan per-bank di admin)
-$bankList = [];
-for ($i = 1; $i <= 3; $i++) {
-    $bankName = getSetting("bank{$i}_name");
-    $bankAccount = getSetting("bank{$i}_account");
-    $bankHolder = getSetting("bank{$i}_name_holder");
-    if ($bankName && $bankAccount) {
-        $bankList[] = [
-            'bank' => $bankName,
-            'account_number' => $bankAccount,
-            'account_name' => $bankHolder ?: '-'
-        ];
-    }
-}
-if (empty($bankList)) {
+// Ambil daftar bank dari settings
+$bankList = getSetting('bank_accounts');
+if ($bankList) {
+    $bankList = json_decode($bankList, true);
+} else {
     $bankList = [
         ['bank' => 'BCA', 'account_number' => '1234567890', 'account_name' => 'Percetakan Ikky Share'],
         ['bank' => 'Mandiri', 'account_number' => '9876543210', 'account_name' => 'Percetakan Ikky Share'],

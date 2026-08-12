@@ -173,7 +173,7 @@ foreach ($items as $item) {
 .invoice-footer2 { margin-top:20px;padding-top:10px;border-top:1px solid #ddd;text-align:center;font-size:10px;color:#999; }
 <?php endif; ?>
 .print-btn { position:fixed;top:80px;right:20px;padding:10px 20px;background:#111111;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:14px;z-index:100; }
-.print-btn:hover { background:#222222; }
+.print-btn:hover { background:#34495e; }
 .page-break { page-break-after:always; }
 @media print { @page { size:A5 landscape; margin:3mm; } .navbar,.footer,.print-btn,.no-print{display:none!important;} .invoice-wrapper{box-shadow:none;border-radius:0;padding:6px 4px;margin:0;max-width:none;width:100%;} body{background:#fff;} .main-content{padding:0;margin:0;max-width:none;} .container.main-content{max-width:none;padding:0;} .invoice-head,.invoice-mid{font-size:8px!important;} .invoice-head-left strong{font-size:11px!important;} .invoice-head-right .inv-no{font-size:9px!important;} .invoice-table th{padding:3px 4px!important;font-size:8px!important;} .invoice-table td{padding:2px 4px!important;font-size:8px!important;line-height:1.2!important;} .invoice-bottom{font-size:8px!important;} .invoice-sign{margin-top:8px!important;} .invoice-sign div{font-size:8px!important;} .invoice-sign .sign-space{margin-bottom:18px!important;} .invoice-footer2{font-size:7px!important;margin-top:5px!important;} .inv-no{margin-top:2px!important;font-size:9px!important;} .invoice-head-right p,.invoice-head-left p{font-size:8px!important;margin:0!important;line-height:1.2!important;} .invoice-table td:nth-child(6),.invoice-table td:nth-child(7){font-size:8px!important;white-space:nowrap;} .invoice-bottom-left ol{font-size:7px!important;line-height:1.3!important;padding-left:10px!important;margin:2px 0!important;} .invoice-bottom-left ol li{margin-bottom:1px!important;} .invoice-bottom-right td{padding:2px 4px!important;font-size:8px!important;} .invoice-bottom-right .total-row td{font-size:10px!important;} }
 </style>
@@ -248,7 +248,7 @@ foreach ($chunks as $chunk):
                     $varData = !empty($item['variants']) ? json_decode($item['variants'], true) : [];
                     if (!empty($varData)): 
                         foreach ($varData as $vr): ?>
-                            <br><small style="color:#d32f2f;">+ <?= htmlspecialchars($vr['name']) ?> <?= formatRupiah($vr['price']) ?></small>
+                            <br><small style="color:#e67e22;">+ <?= htmlspecialchars($vr['name']) ?> <?= formatRupiah($vr['price']) ?></small>
                     <?php endforeach; endif; ?>
                 </td>
                 <td><?= ($item['width'] && $item['height']) ? intval($item['width']) . ' &times; ' . intval($item['height']) : htmlspecialchars($item['unit_label'] ?: '-') ?></td>

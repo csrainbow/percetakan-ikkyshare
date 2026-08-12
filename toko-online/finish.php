@@ -3,7 +3,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/config.php';
 
 // 🔥 CEK SESSION - CUSTOMER HARUS LOGIN
 if (!isset($_SESSION['customer_id'])) {
@@ -110,7 +110,7 @@ if ($serverKey && $orderCode) {
                 $checkPayment->execute([$order['id'], $grossAmount]);
                 if (!$checkPayment->fetch()) {
                     $stmt = $db->prepare("INSERT INTO payments (order_id, amount, bank_name, account_number, account_name, proof_image, payment_type, status, created_at) 
-                                           VALUES (?, ?, 'Midtrans', 'Online', 'Midtrans', '', 'midtrans', 'approved', NOW())");
+                                           VALUES (?, ?, 'Midtrans', 'Online', 'Midtrans', '', 'midtrans', 'approved', datetime('now'))");
                     $stmt->execute([
                         $order['id'],
                         $grossAmount,
@@ -292,14 +292,14 @@ include '../includes/header.php';
     color: #fff;
 }
 .btn-warning:hover {
-    background: #c62828;
+    background: #d68910;
 }
 .btn-danger {
     background: #d32f2f;
     color: #fff;
 }
 .btn-danger:hover {
-    background: #b71c1c;
+    background: #c0392b;
 }
 .midtrans-error {
     background: #fef9e7;

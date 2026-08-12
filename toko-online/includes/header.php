@@ -7,7 +7,7 @@
     
     <!-- 🔥 Meta Tags SEO -->
     <meta name="description" content="Percetakan online terpercaya di Samarinda. Cetak undangan, stiker, banner, spanduk, dan kebutuhan percetakan lainnya. Harga terjangkau, kualitas terbaik.">
-    <meta name="keywords" content="percetakan online samarinda, percetakan murah samarinda, cetak undangan samarinda, cetak stiker samarinda, cetak banner samarinda, cetak spanduk samarinda, cetak kartu nama samarinda, cetak brosur samarinda, cetak kalender samarinda, digital printing samarinda, percetakan terpercaya samarinda, percetakan ikky share, cetak foto samarinda, cetak flyer samarinda, percetakan offset samarinda, sablon samarinda, uv printer samarinda, percetakan terdekat samarinda, percetakan 24 jam samarinda">
+    <meta name="keywords" content="percetakan online, cetak samarinda, undangan, stiker, banner, spanduk, kartu nama, brosur, kalender, cetak murah">
     <meta name="robots" content="index, follow">
     <meta name="author" content="Percetakan Ikky Share">
     <meta name="theme-color" content="#111111">

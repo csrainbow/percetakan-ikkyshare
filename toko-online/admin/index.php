@@ -8,9 +8,7 @@ require_once __DIR__ . '/../config.php';
 // 🔥 CLEAN OUTPUT BUFFER
 ob_start();
 
-// ✅ FIX: Inisialisasi variabel error agar tidak undefined
 $error = '';
-
 $pageTitle = 'Admin Login - Percetakan Ikky Share';
 
 // 🔥 CEK APAKAH SUDAH LOGIN

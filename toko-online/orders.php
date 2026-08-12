@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/config.php';
 if (!isAdmin()) redirect('/admin/index.php');
 
 // 🔥 🔥 FILTER & PENCARIAN 🔥 🔥
@@ -369,9 +369,9 @@ include '../includes/header.php';
 .btn-success { background: #27ae60; color: #fff; }
 .btn-success:hover { background: #1e8449; }
 .btn-warning { background: #e53935; color: #fff; }
-.btn-warning:hover { background: #c62828; }
+.btn-warning:hover { background: #d68910; }
 .btn-danger { background: #d32f2f; color: #fff; }
-.btn-danger:hover { background: #b71c1c; }
+.btn-danger:hover { background: #c0392b; }
 .btn-info { background: #3498db; color: #fff; }
 .btn-info:hover { background: #2c81ba; }
 .btn-outline { background: #fff; color: #111111; border: 1px solid #111111; }

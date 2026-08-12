@@ -90,6 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload_design_result'
                 }
 
                 $_SESSION['success'] = "✅ Hasil desain berhasil diupload! Customer sudah diberi notifikasi.";
+                waOrderStatus($db, $orderId, 'processed', "🎨 Hasil desain sudah siap!\n📎 Lihat/download hasil: https://percetakan-ikkyshare.web.id/uploads/designs/" . $filename);
                 echo '<script>location.href="order-detail.php?id=' . $orderId . '";</script>';
                 exit;
             }
@@ -266,9 +267,9 @@ include '../includes/header.php';
 .btn-success { background: #27ae60; color: #fff; }
 .btn-success:hover { background: #1e8449; }
 .btn-danger { background: #d32f2f; color: #fff; }
-.btn-danger:hover { background: #b71c1c; }
+.btn-danger:hover { background: #c0392b; }
 .btn-warning { background: #e53935; color: #fff; }
-.btn-warning:hover { background: #c62828; }
+.btn-warning:hover { background: #d68910; }
 .btn-outline { background: #fff; color: #111111; border: 1px solid #111111; }
 .btn-outline:hover { background: #f8f9fa; }
 .btn-sm { padding: 4px 10px; font-size: 11px; }
@@ -309,6 +310,7 @@ include '../includes/header.php';
             <li><a href="dashboard.php">Dashboard</a></li>
             <li><a href="products.php">Produk</a></li>
             <li><a href="orders.php" class="active">Pesanan</a></li>
+            <li><a href="../kasir/" target="_blank">Kasir</a></li>
             <li><a href="edit-halaman.php?slug=tentang-kami">Tentang Kami</a></li>
             <li><a href="settings.php">Pengaturan</a></li>
             <li><a href="logout.php">Logout</a></li>
@@ -361,7 +363,7 @@ include '../includes/header.php';
             </div>
             <?php if ($sisaPembayaran > 0): ?>
                 <div style="margin-top:10px;background:#fff;border-radius:4px;height:8px;overflow:hidden;">
-                    <div style="width:<?= $persentaseDibayar ?>%;height:100%;background:linear-gradient(90deg,#e53935,#d32f2f);"></div>
+                    <div style="width:<?= $persentaseDibayar ?>%;height:100%;background:linear-gradient(90deg,#e53935,#e67e22);"></div>
                 </div>
                 <small style="color:#999;"><?= $persentaseDibayar ?>% dari total sudah dibayar</small>
             <?php endif; ?>
@@ -493,7 +495,7 @@ include '../includes/header.php';
                         $varData = !empty($item['variants']) ? json_decode($item['variants'], true) : [];
                         if (!empty($varData)): 
                             foreach ($varData as $vr): ?>
-                                <br><small style="color:#d32f2f;">+ <?= htmlspecialchars($vr['name']) ?> <?= formatRupiah($vr['price']) ?></small>
+                                <br><small style="color:#e67e22;">+ <?= htmlspecialchars($vr['name']) ?> <?= formatRupiah($vr['price']) ?></small>
                         <?php endforeach; endif; ?>
                     </td>
                     <td><?= htmlspecialchars($item['material_name']) ?: '-' ?></td>

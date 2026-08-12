@@ -247,7 +247,7 @@ include 'includes/header.php';
     color: #fff;
 }
 .btn-warning:hover {
-    background: #c62828;
+    background: #d68910;
 }
 .btn-outline {
     background: #fff;
@@ -428,7 +428,7 @@ include 'includes/header.php';
                             $varData = !empty($item['variants']) ? json_decode($item['variants'], true) : [];
                             if (!empty($varData)): 
                                 foreach ($varData as $vr): ?>
-                                    <br><small style="color:#d32f2f;">+ <?= htmlspecialchars($vr['name']) ?> <?= formatRupiah($vr['price']) ?></small>
+                                    <br><small style="color:#e67e22;">+ <?= htmlspecialchars($vr['name']) ?> <?= formatRupiah($vr['price']) ?></small>
                             <?php endforeach; endif; ?>
                         </td>
                         <td><?= htmlspecialchars($item['material_name']) ?: '-' ?></td>

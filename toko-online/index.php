@@ -84,7 +84,7 @@ include 'includes/header.php';
     z-index: 1;
 }
 .hero .btn:hover {
-    background: #c62828;
+    background: #d68910;
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(243,156,18,0.4);
 }

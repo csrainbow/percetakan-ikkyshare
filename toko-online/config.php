@@ -18,7 +18,7 @@ if (session_status() === PHP_SESSION_NONE) {
 // ERROR REPORTING
 // ============================================
 error_reporting(E_ALL);
-ini_set('display_errors', 1); // Set 0 untuk production
+ini_set('display_errors', 0); // Set 0 untuk production
 ini_set('log_errors', 1);
 ini_set('error_log', __DIR__ . '/logs/php-error.log');
 
@@ -38,7 +38,7 @@ define('SITE_NAME', 'Percetakan Ikky Share');
 define('SITE_DESCRIPTION', 'Percetakan online terpercaya di Samarinda. Cetak undangan, stiker, banner, dan kebutuhan percetakan lainnya.');
 
 // 🔥 WhatsApp
-define('WHATSAPP_NUMBER', '6281234567890');
+define('WHATSAPP_NUMBER', '6285346022172');
 
 // 🔥 Admin Login
 define('ADMIN_USERNAME', 'admin');
@@ -106,4 +106,38 @@ try {
     $db->query("SELECT 1");
 } catch (Exception $e) {
     die("❌ Database tidak bisa diakses: " . $e->getMessage());
+}
+function waOrderStatus($db, $orderId, $event, $extra = '') {
+    $order = $db->prepare("SELECT * FROM orders WHERE id=?");
+    $order->execute([$orderId]);
+    $order = $order->fetch();
+    if (!$order || empty($order['customer_phone'])) {
+        return false;
+    }
+    $name = $order['customer_name'];
+    $code = $order['order_code'];
+    $total = isset($order['total']) ? $order['total'] : 0;
+    $msgs = [
+        'paid'      => "✅ *PEMBAYARAN DITERIMA*\n\nHalo $name, pembayaran pesanan *$code* sebesar *" . formatRupiah($total) . "* sudah kami terima.\n\nPesanan Anda akan segera kami kerjakan. Terima kasih 🙏",
+        'dp'        => "💰 *PEMBAYARAN DP DITERIMA*\n\nHalo $name, pembayaran DP pesanan *$code* sudah kami terima.\n\nStatus pesanan bisa dicek di https://percetakan-ikkyshare.web.id/cek-pesanan.php\n\nTerima kasih 🙏",
+        'processed' => "🔨 *PESANAN DIPROSES*\n\nHalo $name, pesanan *$code* sedang dikerjakan oleh tim kami.\n\nKami akan kabari lagi jika sudah selesai. Terima kasih 🙏",
+        'printing'  => "🖨️ *PESANAN DICETAK*\n\nHalo $name, pesanan *$code* sedang dalam proses cetak.\n\nMohon ditunggu ya 🙏",
+        'done'      => "🎉 *PESANAN SELESAI*\n\nHalo $name, pesanan *$code* sudah selesai dan siap untuk diambil / dikirim.\n\nTerima kasih sudah mempercayakan kami 🙏",
+    ];
+    $message = $msgs[$event] ?? '';
+    if ($message === '') {
+        return false;
+    }
+    if ($extra !== '') {
+        $message .= "\n\n" . $extra;
+    }
+    $message .= "\n\n— Percetakan Ikky Share";
+    $phone = preg_replace('/\D+/', '', (string)$order['customer_phone']);
+    if ($phone === '') {
+        return false;
+    }
+    if (substr($phone, 0, 1) === '0') {
+        $phone = '62' . substr($phone, 1);
+    }
+    return waSend($phone, $message);
 }

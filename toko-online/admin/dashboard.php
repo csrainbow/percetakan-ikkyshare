@@ -317,6 +317,7 @@ include '../includes/header.php';
             <li><a href="dashboard.php" class="active">Dashboard</a></li>
             <li><a href="products.php">Produk</a></li>
             <li><a href="orders.php">Pesanan</a></li>
+            <li><a href="../kasir/" target="_blank">Kasir</a></li>
             <li><a href="edit-halaman.php?slug=tentang-kami">Tentang Kami</a></li>
             <li><a href="settings.php">Pengaturan</a></li>
             <li><a href="logout.php">Logout</a></li>

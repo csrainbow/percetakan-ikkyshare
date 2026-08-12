@@ -221,7 +221,7 @@ include '../includes/header.php';
     color: #fff;
 }
 .btn-danger:hover {
-    background: #b71c1c;
+    background: #c0392b;
 }
 
 .alert {

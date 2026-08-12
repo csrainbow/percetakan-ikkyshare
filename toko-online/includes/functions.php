@@ -237,6 +237,19 @@ function initDatabase() {
         error_log("Failed to create admin_logs table: " . $e->getMessage());
     }
 
+    // 🔥 TABEL CUSTOMER_LOGS
+    try {
+        $db->exec("CREATE TABLE IF NOT EXISTS customer_logs (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            customer_id INTEGER,
+            action VARCHAR(50),
+            ip_address VARCHAR(45),
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        )");
+    } catch (Exception $e) {
+        error_log("Failed to create customer_logs table: " . $e->getMessage());
+    }
+
     // 🔥 TABEL REGISTER_ATTEMPTS (Rate Limiting Registrasi)
     try {
         $db->exec("CREATE TABLE IF NOT EXISTS register_attempts (
@@ -479,7 +492,10 @@ function seedSettings($db) {
         ['key' => 'store_address', 'value' => 'Jl. Contoh No. 123, Samarinda'],
         ['key' => 'store_phone', 'value' => '081234567890'],
         ['key' => 'whatsapp_number', 'value' => '6281234567890'],
-        ['key' => 'admin_email', 'value' => 'admin@percetakan-ikkyshare.com'],
+        ['key' => 'wa_enabled', 'value' => ''],
+        ['key' => 'wa_provider', 'value' => 'fonnte'],
+        ['key' => 'wa_token', 'value' => ''],
+        ['key' => 'admin_email', 'value' => 'admin@percetakan-ikkyshare.web.id'],
         ['key' => 'qris_name', 'value' => ''],
         ['key' => 'qris_merchant_id', 'value' => ''],
         ['key' => 'qris_image', 'value' => ''],
@@ -510,6 +526,55 @@ if (!function_exists('formatRupiah')) {
         $amount = is_numeric($amount) ? $amount : 0;
         return 'Rp ' . number_format($amount, 0, ',', '.');
     }
+
+function waSend($to, $message) {
+    if (!getSetting('wa_enabled') || !getSetting('wa_token')) {
+        return false;
+    }
+    $provider = getSetting('wa_provider') === 'wablas' ? 'wablas' : 'fonnte';
+    $to = preg_replace('/\D+/', '', (string)$to);
+    if ($to === '') {
+        return false;
+    }
+    $ch = curl_init();
+    if ($provider === 'wablas') {
+        if (substr($to, 0, 1) === '0') {
+            $to = '62' . substr($to, 1);
+        }
+        curl_setopt_array($ch, [
+            CURLOPT_URL => 'https://patp.wablas.com/api/send-message',
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => json_encode(['phone' => $to, 'message' => $message, 'token' => getSetting('wa_token')]),
+            CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT => 8,
+        ]);
+    } else {
+        curl_setopt_array($ch, [
+            CURLOPT_URL => 'https://api.fonnte.com/send',
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => json_encode(['target' => $to, 'message' => $message, 'countryCode' => '62']),
+            CURLOPT_HTTPHEADER => ['Content-Type: application/json', 'Authorization: ' . getSetting('wa_token')],
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT => 8,
+        ]);
+    }
+    $res = curl_exec($ch);
+    $code = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $err = curl_error($ch);
+    curl_close($ch);
+    $ok = false;
+    if ($err === '' && is_string($res) && $res !== '') {
+        $j = json_decode($res, true);
+        if (is_array($j)) {
+            $ok = $j['status'] === true || $j['status'] === 'true' || $j['status'] === 1 || $j['status'] === '1';
+        }
+    }
+    if ($code !== 200 || !$ok) {
+        error_log('WA notif gagal: ' . $provider . ' | code ' . $code . ' | ' . ($err !== '' ? $err : mb_substr((string)$res, 0, 120)));
+    }
+    return $ok;
+}
 }
 
 if (!function_exists('getSetting')) {

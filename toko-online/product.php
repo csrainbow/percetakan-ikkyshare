@@ -586,7 +586,7 @@ include 'includes/header.php';
                                data-vname="<?= htmlspecialchars($v['name'], ENT_QUOTES) ?>"
                                data-vprice="<?= $v['price'] ?>" onchange="calcPrice()">
                         <?= htmlspecialchars($v['name']) ?> 
-                        <span style="color:#d32f2f;font-size:13px;">+ <?= formatRupiah($v['price']) ?></span>
+                        <span style="color:#e67e22;font-size:13px;">+ <?= formatRupiah($v['price']) ?></span>
                     </label>
                 </div>
                 <?php endforeach; ?>

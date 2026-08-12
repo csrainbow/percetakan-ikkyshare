@@ -38,11 +38,11 @@ define('SITE_NAME', 'Percetakan Ikky Share');
 define('SITE_DESCRIPTION', 'Percetakan online terpercaya di Samarinda. Cetak undangan, stiker, banner, dan kebutuhan percetakan lainnya.');
 
 // 🔥 WhatsApp
-define('WHATSAPP_NUMBER', '6281234567890');
+define('WHATSAPP_NUMBER', '6285346022172');
 
 // 🔥 Admin Login (gunakan defined() karena sudah di config.php)
 if (!defined('ADMIN_USERNAME')) define('ADMIN_USERNAME', 'admin');
-if (!defined('ADMIN_PASSWORD_HASH')) define('ADMIN_PASSWORD_HASH', '$2y$10$0P6ctbBhBr7BmiHhifZvy.5vU694Ri4RHSdEbK14Cjc6ejzWOyBdS');
+if (!defined('ADMIN_PASSWORD_HASH')) define('ADMIN_PASSWORD_HASH', '$2y$10$Ytza3sIXDe9rzF/EENxO0O96g9sxfDVW8JD/GH3U7eV3x1R0PCeTm');
 
 // ============================================
 // LOGS FOLDER

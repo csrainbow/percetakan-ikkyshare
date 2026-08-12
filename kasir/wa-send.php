@@ -36,7 +36,7 @@ $code = $ps['no_pesanan'] ?? ($ref === 'penjualan' ? ('PNJ-' . str_pad((string)$
 $message = "📋 *NOTA " . ($ref === 'penjualan' ? 'PENJUALAN' : 'PESANAN') . "*\n\n"
     . "Halo $name, berikut nota *$code* dengan total " . rp($total) . " (status: $status).\n\n"
     . "Detail nota: $link\n\n"
-    . "Mohon konfirmasi. Terima kasih 🙏\n\n- " . setting('nama_toko', 'Percetakan Ikky Share');
+    . "Mohon konfirmasi. Terima kasih 🙏\n\n— " . setting('nama_toko', 'Percetakan Ikky Share');
 
 $sent = wa_send($telepon, $message);
 if ($sent) {

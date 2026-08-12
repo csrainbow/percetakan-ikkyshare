@@ -19,6 +19,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['update_status'])) {
         $stmt = $db->prepare("UPDATE orders SET status=? WHERE id=?");
         $stmt->execute([$_POST['status'], $_POST['order_id']]);
+        $newStatus = $_POST['status'];
+        if (in_array($newStatus, ['processed', 'printing', 'done'])) {
+            waOrderStatus($db, intval($_POST['order_id']), $newStatus);
+        }
         $_SESSION['success'] = "✅ Status pesanan berhasil diupdate!";
         header('Location: ' . $returnTo);
         exit;
@@ -79,6 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['success'] = "💰 Pembayaran DP berhasil diverifikasi! Sisa: " . formatRupiah($total - $totalPaid);
         }
         
+        waOrderStatus($db, intval($_POST['order_id']), $totalPaid >= $total ? 'paid' : 'dp');
         header('Location: ' . $returnTo);
         exit;
     }
@@ -104,6 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $db->prepare("UPDATE payments SET payment_type='dp' WHERE id=? AND (payment_type IS NULL OR payment_type='')")->execute([$_POST['payment_id']]);
         
         $_SESSION['success'] = "💰 Pembayaran DP berhasil diverifikasi (paksa)!";
+        waOrderStatus($db, intval($_POST['order_id']), 'dp');
         header('Location: ' . $returnTo);
         exit;
     }
@@ -112,6 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['design_done'])) {
         $db->prepare("UPDATE orders SET status='processed' WHERE id=? AND status='desain'")->execute([$_POST['order_id']]);
         $_SESSION['success'] = "🎨 Desain selesai! Pesanan masuk ke proses cetak.";
+        waOrderStatus($db, intval($_POST['order_id']), 'processed');
         header('Location: ' . $returnTo);
         exit;
     }
@@ -265,6 +272,7 @@ include '../includes/header.php';
             <li><a href="dashboard.php">Dashboard</a></li>
             <li><a href="products.php">Produk</a></li>
             <li><a href="orders.php" class="active">Pesanan</a></li>
+            <li><a href="../kasir/" target="_blank">Kasir</a></li>
             <li><a href="settings.php">Pengaturan</a></li>
             <li><a href="logout.php">Logout</a></li>
         </ul>

@@ -218,7 +218,7 @@ function wa_pelanggan($ps, $event, $extra = '') {
     if ($extra !== '') {
         $message .= "\n\n" . $extra;
     }
-    $message .= "\n\n- " . setting('nama_toko', 'Percetakan Ikky Share');
+    $message .= "\n\n— " . setting('nama_toko', 'Percetakan Ikky Share');
     $imageUrl = '';
     if ($event === 'selesai') {
         $imageUrl = 'https://barcode.tec-it.com/barcode.ashx?data=' . rawurlencode($linkNota)

@@ -439,7 +439,7 @@ function renderCart() {
         var dimLabel = isCustom && item.label ? ' (' + item.label + ')' : '';
         var dsLabel = '';
         if (item.designService === 'jasa') {
-            dsLabel = ' <span style="color:#d32f2f;">🎨 +Jasa Desain</span>';
+            dsLabel = ' <span style="color:#e67e22;">🎨 +Jasa Desain</span>';
         } else if (item.designService === 'upload') {
             dsLabel = item.designFile ? ' <span style="color:#27ae60;">✅ File terupload</span>' : ' <span style="color:#e53935;">📎 File Desain (upload di checkout)</span>';
         }

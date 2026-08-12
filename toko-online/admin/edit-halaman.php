@@ -395,6 +395,7 @@ input:checked + .slider:before {
             <li><a href="dashboard.php">Dashboard</a></li>
             <li><a href="products.php">Produk</a></li>
             <li><a href="orders.php">Pesanan</a></li>
+            <li><a href="../kasir/" target="_blank">Kasir</a></li>
             <li><a href="edit-halaman.php?slug=tentang-kami" class="<?= $slug === 'tentang-kami' ? 'active' : '' ?>">Tentang Kami</a></li>
             <li><a href="settings.php">Pengaturan</a></li>
             <li><a href="logout.php">Logout</a></li>
