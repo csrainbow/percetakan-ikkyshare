@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nota <?= e($ps['no_pesanan']) ?></title>
-<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/style.css?v=<?= filemtime(__DIR__ . '/../assets/style.css') ?>">
 <script src="assets/print.js"></script>
 </head>
 <body class="<?= setting('struk_lebar', '80') === '58' ? 'struk-lebar-58' : '' ?>">
@@ -15,8 +15,8 @@
 </div>
 
 <div class="struk">
-    <?php if (setting('logo_struk', 'assets/logo-struk.jpeg')): ?>
-        <img class="logo-struk" src="<?= e(setting('logo_struk', 'assets/logo-struk.jpeg')) ?>" alt="Logo">
+    <?php if (setting('logo_struk', 'logo.png')): ?>
+        <img class="logo-struk" src="<?= e(setting('logo_struk', 'logo.png')) ?>" alt="Logo">
     <?php endif; ?>
     <div class="center">
         <h3><?= e(setting('nama_toko')) ?></h3>
