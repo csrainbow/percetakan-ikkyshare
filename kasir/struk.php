@@ -31,6 +31,9 @@ $user = DB::one('SELECT username FROM users WHERE id = ?', [$p['user_id']]);
 </div>
 
 <div class="struk">
+    <?php if (setting('logo_struk', 'assets/logo-struk.jpeg')): ?>
+        <img class="logo-struk" src="<?= e(setting('logo_struk', 'assets/logo-struk.jpeg')) ?>" alt="Logo">
+    <?php endif; ?>
     <div class="center">
         <h3><?= e(setting('nama_toko')) ?></h3>
         <p class="muted kecil"><?= e(setting('alamat')) ?></p>

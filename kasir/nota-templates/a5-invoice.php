@@ -16,6 +16,7 @@ $sisaAmount = (float)$ps['sisa'];
 .invoice-table { width:100%;border-collapse:collapse;margin-bottom:4px; }
 .invoice-table th { background:#2c3e50;color:#fff;padding:3px 4px;text-align:left;font-size:8px; }
 .invoice-table td { padding:2px 4px;border-bottom:1px solid #eee;font-size:8px;line-height:1.2; }
+.invoice-table .inv-spacer td { height:14px; }
 .invoice-table .item-note { font-size:7px;color:#999; }
 .invoice-bottom { width:100%;border-collapse:collapse;margin-top:4px;font-size:8px; }
 .invoice-bottom td { vertical-align:top;padding:0 4px; }
@@ -41,12 +42,11 @@ $sisaAmount = (float)$ps['sisa'];
             <td class="invoice-head-left">
                 <?php $logoImg = $invoiceLogo ?? setting('logo_image', 'assets/logo-ikky.jpeg'); ?>
                 <?php if ($logoImg): ?>
-                    <img src="<?= e($logoImg) ?>" alt="Logo" style="float:left;width:90px;height:auto;margin:0 8px 4px 0;">
+                    <img class="logo-nota" src="<?= e($logoImg) ?>" alt="Logo">
                 <?php endif; ?>
                 <strong><?= e(setting('nama_toko')) ?></strong>
                 <p><?= nl2br(e(setting('alamat'))) ?></p>
                 <p>Telp: <?= e(setting('telp')) ?></p>
-                <div class="inv-no" style="margin-top:8px;">Invoice No : <?= e($ps['no_pesanan']) ?></div>
             </td>
             <td class="invoice-head-right">
                 <p><?= e(setting('kota')) ?>, <?= tgl_ind($ps['tgl']) ?></p>
@@ -97,6 +97,11 @@ $sisaAmount = (float)$ps['sisa'];
                 <td style="text-align:right;"><?= $it['total'] ?></td>
             </tr>
             <?php endforeach; ?>
+            <?php for ($i = 0; $i < 5; $i++): ?>
+            <tr class="inv-spacer">
+                <td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <?php endfor; ?>
         </tbody>
     </table>
 

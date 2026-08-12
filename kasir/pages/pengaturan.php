@@ -38,31 +38,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    if (!empty($_FILES['qris']) && $_FILES['qris']['error'] === UPLOAD_ERR_OK) {
-        if (!is_superadmin()) {
-            flash_set('error', 'Hanya super admin yang bisa mengunggah QRIS.');
-        } else {
-            $file = $_FILES['qris'];
+    $uploads = [
+        'qris'       => ['key' => 'qris_image',   'base' => 'qris',       'label' => 'QRIS'],
+        'logo_nota'  => ['key' => 'logo_image',   'base' => 'logo-nota',  'label' => 'Logo Nota'],
+        'logo_struk' => ['key' => 'logo_struk',   'base' => 'logo-struk', 'label' => 'Logo Struk'],
+    ];
+    foreach ($uploads as $upField => $upCfg) {
+        if (!empty($_FILES[$upField]) && $_FILES[$upField]['error'] === UPLOAD_ERR_OK) {
+            if (!is_superadmin()) {
+                flash_set('error', 'Hanya super admin yang bisa mengunggah ' . $upCfg['label'] . '.');
+                header('Location: index.php?p=pengaturan');
+                exit;
+            }
+            $file = $_FILES[$upField];
             $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+            $unset = false;
             if (!in_array($ext, ['png', 'jpg', 'jpeg', 'webp'])) {
-                flash_set('error', 'Format QRIS harus PNG/JPG/JPEG/WEBP.');
+                flash_set('error', 'Format ' . $upCfg['label'] . ' harus PNG/JPG/JPEG/WEBP.');
             } elseif ($file['size'] > 2 * 1024 * 1024) {
-                flash_set('error', 'Ukuran QRIS maksimal 2 MB.');
+                flash_set('error', 'Ukuran ' . $upCfg['label'] . ' maksimal 2 MB.');
             } else {
-                $dest = __DIR__ . '/../assets/qris.' . $ext;
+                $dest = __DIR__ . '/../assets/' . $upCfg['base'] . '.' . $ext;
                 if (move_uploaded_file($file['tmp_name'], $dest)) {
-                    if (setting('qris_image') && setting('qris_image') !== 'assets/qris.' . $ext) {
-                        @unlink(__DIR__ . '/../' . setting('qris_image'));
+                    if (setting($upCfg['key']) && setting($upCfg['key']) !== 'assets/' . $upCfg['base'] . '.' . $ext) {
+                        @unlink(__DIR__ . '/../' . setting($upCfg['key']));
                     }
-                    set_setting('qris_image', 'assets/qris.' . $ext);
-                    flash_set('success', 'QRIS berhasil diunggah.');
+                    set_setting($upCfg['key'], 'assets/' . $upCfg['base'] . '.' . $ext);
+                    flash_set('success', $upCfg['label'] . ' berhasil diunggah.');
                 } else {
-                    flash_set('error', 'Gagal mengunggah QRIS.');
+                    flash_set('error', 'Gagal mengunggah ' . $upCfg['label'] . '.');
                 }
             }
+            header('Location: index.php?p=pengaturan');
+            exit;
         }
-        header('Location: index.php?p=pengaturan');
-        exit;
     }
 
     if (!empty($_POST['ganti_pass'])) {
@@ -246,6 +255,38 @@ require __DIR__ . '/../layout/header.php';
         <p class="muted kecil">PNG/JPG/WebP, maks 2 MB. QRIS statis dari bank/penyedia Anda.</p>
     </div>
 
+    <div class="panel grid-full">
+        <h3>Logo Nota &amp; Struk</h3>
+        <p class="muted">Logo tampil di struk thermal, nota A5, dan file PDF. Kosongkan dengan mengunggah logo baru; belum diunggah = memakai <code>assets/logo-ikky.jpeg</code> (Nota) / <code>assets/logo-struk.jpeg</code> (Struk) bawaan.</p>
+        <div class="logo-duo">
+            <div>
+                <p class="muted kecil"><b>Logo Nota (A5 / PDF)</b></p>
+                <?php if (setting('logo_image')): ?>
+                    <img class="qris-preview" src="<?= e(setting('logo_image')) ?>" alt="Logo Nota">
+                <?php else: ?>
+                    <img class="qris-preview" src="assets/logo-ikky.jpeg" alt="Logo Nota (bawaan)">
+                <?php endif; ?>
+                <form method="post" enctype="multipart/form-data" class="form-row">
+                    <input type="file" name="logo_nota" accept=".png,.jpg,.jpeg,.webp" required>
+                    <button type="submit" class="btn">Unggah Logo Nota</button>
+                </form>
+            </div>
+            <div>
+                <p class="muted kecil"><b>Logo Struk (thermal 58/80mm)</b></p>
+                <?php if (setting('logo_struk')): ?>
+                    <img class="qris-preview" src="<?= e(setting('logo_struk')) ?>" alt="Logo Struk">
+                <?php else: ?>
+                    <img class="qris-preview" src="assets/logo-struk.jpeg" alt="Logo Struk (bawaan)">
+                <?php endif; ?>
+                <form method="post" enctype="multipart/form-data" class="form-row">
+                    <input type="file" name="logo_struk" accept=".png,.jpg,.jpeg,.webp" required>
+                    <button type="submit" class="btn">Unggah Logo Struk</button>
+                </form>
+            </div>
+        </div>
+        <p class="muted kecil">PNG/JPG/WebP, maks 2 MB per gambar.</p>
+    </div>
+
     <div class="panel">
         <h3>Notifikasi WhatsApp (Pesanan Baru)</h3>
         <form method="post">
@@ -310,8 +351,8 @@ require __DIR__ . '/../layout/header.php';
         </form>
     </div>
 
-    <div class="panel">
-        <h3>User & Pembukuan</h3>
+    <div class="panel grid-full">
+        <h3>User &amp; Pembukuan</h3>
         <p class="muted">Tambah user kasir baru. Setiap kasir punya pembukuan terpisah (transaksi, pesanan, piutang, laporan). Stok & produk dipakai bersama.</p>
         <form method="post" class="form-row">
             <input type="text" name="username" placeholder="Username baru" required>
