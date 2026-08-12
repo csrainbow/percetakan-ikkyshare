@@ -97,11 +97,13 @@ $sisaAmount = (float)$ps['sisa'];
                 <td style="text-align:right;"><?= $it['total'] ?></td>
             </tr>
             <?php endforeach; ?>
+            <?php if (count($viewItems) <= 5): ?>
             <?php for ($i = 0; $i < 5; $i++): ?>
             <tr class="inv-spacer">
                 <td></td><td></td><td></td><td></td><td></td>
             </tr>
             <?php endfor; ?>
+            <?php endif; ?>
         </tbody>
     </table>
 
